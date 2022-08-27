@@ -3,5 +3,9 @@
 #### Crie um ambiente virtual com comando: *"virtualenv amb"*
 #### No diretorio do arquivo requirements.txt, execute *"pip install -r requirements.txt"*
 #### No diretorio do arquivo manage.py, execute *"python manage.py runserver"*
-#### Acesse localhost:8000
+#### Acesse: *"localhost:8000"*
+
+#### *Rodando aplicação com docker*
+#### *"docker-compose up --build"*
+#### Acesse: *"localhost:8000"*
     
