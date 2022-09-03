@@ -1,1 +1,4 @@
 amb/
+#chat_community/chat/__pycache__/
+#chat_community/chat_service/__pycache__/
+#chat_community/chat_service/migrations/

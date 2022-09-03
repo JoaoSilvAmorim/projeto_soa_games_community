@@ -3,7 +3,7 @@
 <html>
     <head>
         <meta charset="utf-8"/>
-        <title>Chatty</title>
+        <title>Chat</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
     </head>
 
@@ -14,12 +14,32 @@
                     <div class="column is-6 is-offset-3 mb-6">
                         <section class="hero is-link">
                             <div class="hero-body">
-                                <p class="title">
-                                    Chat Community
+                                <p class="title" style="text-align: center">
+                                    Chat
                                 </p>
                             </div>
                         </section>
                     </div>
+
+                    {% if groups|length > 0 %}
+                    <div class="column is-6 is-offset-3">
+                        <div class="box">
+                            <div style="max-height: 300px; overflow-y: scroll;">{% for group in groups %}
+                                <b>Sala</b>: {{ group.group_name }}<br>
+                                <b>Online</b>: {{ group.online }}<br><br>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="column is-6 is-offset-3">
+                        <div class="box">
+                            <div style="max-height: 300px; overflow-y: scroll;">
+                              <p>Dar refresh na pagina para aparecer as salas... OBS: Corrigir isso com ajax</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
 
                     <div class="column is-6 is-offset-3">
                         <div class="box">
@@ -38,7 +58,7 @@
                             </div>
                         </div>
 
-                        <!--<small class="has-text-grey-light">Meu usuario: {{ username }}</small>-->
+                        <small class="has-text-black-light">Meu usuário: {{ username }}</small>
                     </div>
                 </div>
             </div>
@@ -46,8 +66,15 @@
 
        {{ room_name|json_script:"json-roomname" }}
        {{ username|json_script:"json-username" }}
-
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script>
+        $(function() {
+            setTime();
+            function setTime() {
+                var date = new Date().getTime();
+                setTimeout(setTime, 3000);
+            }
+            });
             function scrollToBottom() {
                 let objDiv = document.getElementById("chat-messages");
                 objDiv.scrollTop = objDiv.scrollHeight;
@@ -74,14 +101,14 @@
                 if (data.message) {
                     document.querySelector('#chat-messages').innerHTML += ('<b>' + data.username + '</b>: ' + data.message + '<br>');
                 } else {
-                    alert('The message is empty!');
+                    alert('The message is empty');
                 }
 
                 scrollToBottom();
             };
 
             chatSocket.onclose = function(e) {
-                console.log('The socket close unexpectadly');
+                console.log('The socket close');
             };
 
             document.querySelector('#chat-message-submit').onclick = function(e) {
