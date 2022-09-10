@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 
 <html>
+    <style scoped>
+        .hero-body {
+            flex-grow: 1;
+            flex-shrink: 0;
+            padding: 0rem 0rem !important
+        }
+    </style>
     <head>
         <meta charset="utf-8"/>
         <title>Chat</title>
@@ -11,7 +18,7 @@
         <section class="section">
             <div class="container">
                 <div class="columns is-multiline">
-                    <div class="column is-6 is-offset-3 mb-6">
+                    <div class="column is-6 is-offset-3 mb-1">
                         <section class="hero is-link">
                             <div class="hero-body">
                                 <p class="title" style="text-align: center">
@@ -21,8 +28,15 @@
                         </section>
                     </div>
 
+                    <div class="column is-6 is-offset-3 mb-1" style="font-size: medium;">
+                        <div>
+                            <div id="room">
+                            </div>
+                        </div>
+                    </div>
+
                     {% if groups|length > 0 %}
-                    <div class="column is-6 is-offset-3">
+                    <div class="column is-4 is-offset-3">
                         <div class="box">
                             <div style="max-height: 300px; overflow-y: scroll;">{% for group in groups %}
                                 <b>Sala</b>: {{ group.group_name }}<br>
@@ -32,14 +46,23 @@
                         </div>
                     </div>
                     {% else %}
-                    <div class="column is-6 is-offset-3">
+                    <div class="column is-4 is-offset-3">
                         <div class="box">
                             <div style="max-height: 300px; overflow-y: scroll;">
-                              <p>Dar refresh na pagina para aparecer as salas... OBS: Corrigir isso com ajax</p>
+                              <p>Não há mais nenhum chat aberto...</p>
                             </div>
                         </div>
                     </div>
                     {% endif %}
+
+                    <div class="column is-3">
+                        <div class="control column is-8">
+                            <input style="margin-left: -11px;" class="input" type="text" placeholder="sala" id="chat-name">
+                        </div>
+                        <div class="control">
+                            <a class="button is-info" id="room-name-join" onclick="joinRoom()">Entrar</a>
+                        </div>
+                    </div>
 
                     <div class="column is-6 is-offset-3">
                         <div class="box">
@@ -58,7 +81,7 @@
                             </div>
                         </div>
 
-                        <small class="has-text-black-light">Meu usuário: {{ username }}</small>
+                        <small class="has-text-black-light" id="user">Meu usuário: {{ username }}</small>
                     </div>
                 </div>
             </div>
@@ -68,12 +91,12 @@
        {{ username|json_script:"json-username" }}
        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script>
-        $(function() {
-            setTime();
-            function setTime() {
-                var date = new Date().getTime();
-                setTimeout(setTime, 3000);
-            }
+            $(function() {
+                setTime();
+                function setTime() {
+                    var date = new Date().getTime();
+                    setTimeout(setTime, 3000);
+                }
             });
             function scrollToBottom() {
                 let objDiv = document.getElementById("chat-messages");
@@ -84,7 +107,6 @@
 
             const roomName = JSON.parse(document.getElementById('json-roomname').textContent);
             const userName = JSON.parse(document.getElementById('json-username').textContent);
-
             const chatSocket = new WebSocket(
                 'ws://'
                 + window.location.host
@@ -95,14 +117,14 @@
 
             chatSocket.onmessage = function(e) {
                 console.log('onmessage');
-
                 const data = JSON.parse(e.data);
+                if(data.rooms){
+                    document.querySelector('#room').innerHTML = ('<b>Sala Atual</b>: ' +  data.rooms.room + '<br><b>Online</b>: ' +  data.rooms.online + '<br><br>');
+                }
 
                 if (data.message) {
                     document.querySelector('#chat-messages').innerHTML += ('<b>' + data.username + '</b>: ' + data.message + '<br>');
-                } else {
-                    alert('The message is empty');
-                }
+                } 
 
                 scrollToBottom();
             };
@@ -122,6 +144,16 @@
                 }));
 
                 messageInputDom.value = '';
+            };
+
+            function joinRoom(){
+                var roomName = document.querySelector('#chat-name').value;
+                var userName = document.querySelector('#user').textContent.replace("Meu usuário: ", "")
+                console.log(roomName)
+                console.log(roomName + '/?username=' + userName)
+                console.log(window.location.href)
+                //var url = roomName + '/?username=' + userName;
+                window.location.href = 'http://localhost:8000/' + roomName + '/?username=' + userName
             };
         </script>
     </body>

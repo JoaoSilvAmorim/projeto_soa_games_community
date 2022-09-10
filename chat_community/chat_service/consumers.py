@@ -14,8 +14,14 @@ class ChatConsumer(AsyncWebsocketConsumer):
     )
     await self.accept()
     await self.save_group(self.room_group_name, self.channel_name)
-
-
+    await self.channel_layer.group_send(
+      self.room_group_name,
+      {
+        'type': 'online_message',
+        'rooms': await self.online_group(self.room_group_name)
+      }
+    )
+   
   async def disconnect(self, close_code):
     await self.channel_layer.group_discard(
       self.room_group_name,
@@ -23,7 +29,13 @@ class ChatConsumer(AsyncWebsocketConsumer):
     )
     await self.delete_messages(room=self.room_group_name)
     await self.delete_group(self.room_group_name, self.channel_name)
-
+    await self.channel_layer.group_send(
+      self.room_group_name,
+      {
+        'type': 'online_message',
+        'rooms': await self.online_group(self.room_group_name)
+      }
+    )
 
   async def receive(self, text_data=None):
     data = json.loads(text_data)
@@ -49,6 +61,12 @@ class ChatConsumer(AsyncWebsocketConsumer):
     await self.send(text_data=json.dumps({
       'message': message,
       'username': username
+    }))
+
+  async def online_message(self, event):
+    rooms = event['rooms']
+    await self.send(text_data=json.dumps({
+      'rooms': rooms,
     }))
 
 
@@ -81,5 +99,14 @@ class ChatConsumer(AsyncWebsocketConsumer):
   def delete_group(self, group_name, channel_name):
     group = Groups.objects.filter(group_name=group_name)[0]
     if group.online == 0:
-      print("olaaaa")
       Groups.objects.filter(group_name=group_name).delete()
+
+
+  @database_sync_to_async
+  def online_group(self, group_name):
+    try:
+      group = Groups.objects.filter(group_name=group_name)[0]
+      group.group_name = group.group_name.replace("chat_", "")
+      return {'room': group.group_name, 'online': group.online}
+    except:
+      pass
