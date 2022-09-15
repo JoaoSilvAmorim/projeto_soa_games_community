@@ -20,12 +20,12 @@ async function bootstrap() {
   .setTitle('Games Library API')
   .setDescription('API para gerenciamento de uma biblioteca de jogos')
   .setVersion('1.0')
-  .addTag('games')
+  .addTag('Games')
   .build();
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('swagger', app, document);
 
-  await app.listen(6000);
+  await app.listen(7000);
 }
 bootstrap();
