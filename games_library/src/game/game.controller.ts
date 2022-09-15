@@ -25,7 +25,7 @@ export class GameController {
     return this.gameService.findOne(+id);
   }
 
-  @Get(':title')
+  @Get('title/:title')
   findByTitle(@Param('title') title: string) {
     return this.gameService.findByTitle(title);
   }
