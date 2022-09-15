@@ -147,13 +147,11 @@
             };
 
             function joinRoom(){
-                var roomName = document.querySelector('#chat-name').value;
-                var userName = document.querySelector('#user').textContent.replace("Meu usuário: ", "")
-                console.log(roomName)
-                console.log(roomName + '/?username=' + userName)
-                console.log(window.location.href)
-                //var url = roomName + '/?username=' + userName;
-                window.location.href = 'http://localhost:8000/' + roomName + '/?username=' + userName
+                var roomNameJoin = document.querySelector('#chat-name').value;
+                var userNameJoin = document.querySelector('#user').textContent.replace("Meu usuário: ", "")
+                let url = window.location.href.split(roomName)
+                url = url[0] + roomNameJoin + '/?username=' + userNameJoin
+                window.location.replace(url)
             };
         </script>
     </body>
