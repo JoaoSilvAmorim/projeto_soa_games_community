@@ -12,7 +12,7 @@ datasource db {
 
 model Game{
   id Int @id @default(autoincrement())
-  title String
+  title String @unique
   thumbnail String @db.VarChar(800)
   short_description String @db.VarChar(800)
   game_url String @db.VarChar(800)
@@ -20,6 +20,6 @@ model Game{
   platform String @db.VarChar(800)
   publisher String @db.VarChar(800)
   developer String @db.VarChar(800)
-  release_date String @db.VarChar(800)
+  release_date String
   freetogame_profile_url String @db.VarChar(800)
 }
