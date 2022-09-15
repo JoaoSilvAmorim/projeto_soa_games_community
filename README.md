@@ -41,6 +41,6 @@
 
 ## ✅    Swagger Games Library
 
-Acesse: http://localhost:000/swagger
+Acesse: http://localhost:7000/swagger
 
 -----------------------------------------------------------------
