@@ -14,3 +14,33 @@
 #### *"docker-compose up --build"*
 #### Acesse: *"localhost:8000"*
     
+-----------------------------------------------------------------
+## Games Library
+### ⏯ Inicializando o Sistema
+
+#### npm i
+###### Instalar as dependências do projeto 
+###### __________________________________________________________________________________
+#### npm i -g @nestjs/cli
+###### Caso não tenha o nestJS instalado globalmente
+###### __________________________________________________________________________________
+#### npm install --save @nestjs/swagger swagger-ui-express
+###### Instalar as dependências do Swagger
+###### __________________________________________________________________________________
+#### npx prisma migrate dev
+###### Iniciar as migrações do sistema
+###### __________________________________________________________________________________
+#### npx prisma db seed
+###### caso o banco de dados não seja populado automaticamente ao executar as migrações
+###### Popular o banco de dados
+###### __________________________________________________________________________________
+#### npm run start:dev
+###### Execução do crud de games na porta 7000
+
+-----------------------------------------------------------------
+
+## ✅    Swagger Games Library
+
+Acesse: http://localhost:000/swagger
+
+-----------------------------------------------------------------
