@@ -1,26 +1,47 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { CreateGameDto } from './dto/create-game.dto';
 import { UpdateGameDto } from './dto/update-game.dto';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class GameService {
-  create(createGameDto: CreateGameDto) {
-    return 'This action adds a new game';
+  constructor(private readonly prisma: PrismaService){}
+  async create(createGameDto: CreateGameDto) {
+    const data = {
+      ...createGameDto,
+    }
+    const created = await this.prisma.game.create({
+      data,
+    })
+    return created;
   }
 
-  findAll() {
-    return `This action returns all game`;
+  async findAll() {
+    const finds = await this.prisma.game.findMany();
+    
+    return finds;
+  }
+  
+  async findOne(id: number) {
+    const finds = await this.prisma.game.findUnique({where: {id}});
+
+    return finds;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} game`;
+  async update(id: number, updateGameDto: UpdateGameDto) {
+    const game = await this.findOne(id);
+
+    const attGame = await this.prisma.game.update({
+      where: {id: game.id},
+      data: {...updateGameDto, id: game.id}
+    })
+    return attGame;
   }
 
-  update(id: number, updateGameDto: UpdateGameDto) {
-    return `This action updates a #${id} game`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} game`;
+  async remove(id: number) {
+    const game = await this.findOne(id);
+    await this.prisma.game.delete({where: {id: game.id}});
+    return `O jogo ${game.title} foi deletado com sucesso!`;
   }
 }
