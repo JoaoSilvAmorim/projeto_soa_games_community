@@ -29,6 +29,12 @@ export class GameService {
     return finds;
   }
 
+  async findByTitle(title: string) {
+    const finds = await this.prisma.game.findUnique({where: {title}});
+
+    return finds;
+  }
+
   async update(id: number, updateGameDto: UpdateGameDto) {
     const game = await this.findOne(id);
 

@@ -25,6 +25,11 @@ export class GameController {
     return this.gameService.findOne(+id);
   }
 
+  @Get(':title')
+  findByTitle(@Param('title') title: string) {
+    return this.gameService.findByTitle(title);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateGameDto: UpdateGameDto) {
     return this.gameService.update(+id, updateGameDto);
