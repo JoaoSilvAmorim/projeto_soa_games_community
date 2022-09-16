@@ -1,26 +1,63 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
 import { CreateTopicDto } from './dto/create-topic.dto';
 import { UpdateTopicDto } from './dto/update-topic.dto';
 
 @Injectable()
 export class TopicsService {
-  create(createTopicDto: CreateTopicDto) {
-    return 'This action adds a new topic';
+  constructor(private readonly prisma: PrismaService) {}
+  async create(createTopicDto: CreateTopicDto) {
+    const topic = {
+      ...createTopicDto,
+    }
+
+    const data = new Date();
+
+    const br = new Date(data.setHours(data.getHours() - 3));
+    
+    const created = await this.prisma.topics.create({
+      data: {...topic, createdAt: br, updatedAt: br},
+    })
+    return created;
   }
 
-  findAll() {
-    return `This action returns all topics`;
+  async findAll() {
+    const finds = await this.prisma.topics.findMany();
+
+    return finds;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} topic`;
+  async findOne(id: string) {
+    const find = await this.prisma.topics.findUnique({where: {id}});
+    
+    return find;
   }
 
-  update(id: number, updateTopicDto: UpdateTopicDto) {
-    return `This action updates a #${id} topic`;
+  async findByCategory(category: string) {
+    const find = await this.prisma.topics.findMany({where: {category}});
+
+    return find;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} topic`;
+  async update(id: string, updateTopicDto: UpdateTopicDto) {
+    const topic = await this.findOne(id);
+
+    const data = new Date();
+
+    const br = new Date(data.setHours(data.getHours() - 3));
+
+    const attTopic = await this.prisma.topics.update({
+      where: {id: topic.id},
+      data: {...updateTopicDto, id: topic.id, createdAt: topic.createdAt, updatedAt: br},
+    })
+    return attTopic;
+  }
+
+  async remove(id: string) {
+    const topic = await this.findOne(id);
+
+    await this.prisma.topics.delete({where: {id: topic.id}});
+    return `Tópico ${topic.theme} deletado com sucesso!`;
   }
 }

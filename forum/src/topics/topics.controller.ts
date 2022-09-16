@@ -19,16 +19,16 @@ export class TopicsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.topicsService.findOne(+id);
+    return this.topicsService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateTopicDto: UpdateTopicDto) {
-    return this.topicsService.update(+id, updateTopicDto);
+    return this.topicsService.update(id, updateTopicDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.topicsService.remove(+id);
+    return this.topicsService.remove(id);
   }
 }
