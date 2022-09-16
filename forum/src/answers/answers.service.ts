@@ -1,26 +1,64 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { CreateAnswerDto } from './dto/create-answer.dto';
 import { UpdateAnswerDto } from './dto/update-answer.dto';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class AnswersService {
-  create(createAnswerDto: CreateAnswerDto) {
-    return 'This action adds a new answer';
+  constructor(private readonly prisma: PrismaService) {}
+  async create(createAnswerDto: CreateAnswerDto) {
+    const answer = {
+      ...createAnswerDto,
+    }
+
+    const data = new Date();
+
+    const br = new Date(data.setHours(data.getHours() - 3));
+    
+    const created = await this.prisma.answers.create({
+      data: {...answer, createdAt: br, updatedAt: br},
+    })
+    return created;
   }
 
-  findAll() {
-    return `This action returns all answers`;
+  async findAll() {
+    const finds = await this.prisma.answers.findMany();
+
+    return finds;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} answer`;
+  async findOne(id: string) {
+    const find = await this.prisma.answers.findUnique({where: {id: id}});
+    
+    return find;
   }
 
-  update(id: number, updateAnswerDto: UpdateAnswerDto) {
-    return `This action updates a #${id} answer`;
+  async findByUser(userId: string) {
+    const find = await this.prisma.answers.findMany({where: {userId: userId}});
+
+    return find;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} answer`;
+  async update(id: string, updateAnswerDto: UpdateAnswerDto) {
+    const answer = await this.findOne(id);
+
+    const data = new Date();
+
+    const br = new Date(data.setHours(data.getHours() - 3));
+
+    const attTopic = await this.prisma.answers.update({
+      where: {id: answer.id},
+      data: {...updateAnswerDto, id: answer.id, createdAt: answer.createdAt, updatedAt: br},
+    })
+    return attTopic;
+  }
+
+  async remove(id: string) {
+    const answer = await this.findOne(id);
+    const topic = await this.prisma.topics.findUnique({where: {id: answer.topicId}});
+
+    await this.prisma.answers.delete({where: {id: answer.id}});
+    return `A resposta ao tópico ${topic.theme} foi deletada com sucesso!`;
   }
 }

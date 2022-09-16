@@ -22,6 +22,16 @@ export class TopicsController {
     return this.topicsService.findOne(id);
   }
 
+  @Get('user/:userId')
+  findByUser(@Param('userId') userId: string) {
+    return this.topicsService.findByUser(userId);
+  }
+
+  @Get('category/:category')
+  findByCategory(@Param('category') category: string) {
+    return this.topicsService.findByUser(category);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateTopicDto: UpdateTopicDto) {
     return this.topicsService.update(id, updateTopicDto);

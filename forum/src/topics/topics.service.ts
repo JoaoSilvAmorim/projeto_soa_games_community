@@ -29,13 +29,19 @@ export class TopicsService {
   }
 
   async findOne(id: string) {
-    const find = await this.prisma.topics.findUnique({where: {id}});
+    const find = await this.prisma.topics.findUnique({where: {id: id}});
     
     return find;
   }
 
   async findByCategory(category: string) {
-    const find = await this.prisma.topics.findMany({where: {category}});
+    const find = await this.prisma.topics.findMany({where: {category: category}});
+
+    return find;
+  }
+
+  async findByUser(userId: string) {
+    const find = await this.prisma.topics.findMany({where: {userId: userId}});
 
     return find;
   }
