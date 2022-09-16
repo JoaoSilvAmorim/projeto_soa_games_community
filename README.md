@@ -15,7 +15,7 @@
 #### Acesse: *"localhost:8000"*
     
 -----------------------------------------------------------------
-## Games Library
+## Games Library and Forum
 ### ⏯ Inicializando o Sistema
 
 #### npm i
@@ -36,11 +36,17 @@
 ###### __________________________________________________________________________________
 #### npm run start:dev
 ###### Execução do crud de games na porta 7000
+###### Execução do crud do forum na porta 7100
 
 -----------------------------------------------------------------
 
 ## ✅    Swagger Games Library
 
 Acesse: http://localhost:7000/swagger
+
+-----------------------------------------------------------------
+## ✅    Swagger Forum
+
+Acesse: http://localhost:7100/swagger
 
 -----------------------------------------------------------------
