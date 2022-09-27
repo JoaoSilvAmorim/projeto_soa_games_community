@@ -1,0 +1,10 @@
+FROM node:16
+WORKDIR /usr/src/app
+COPY package*.json ./
+
+RUN npm i
+RUN npm i -g @nestjs/cli
+RUN npm install --save @nestjs/swagger swagger-ui-express
+RUN npx prisma migrate dev
+RUN npm run start:dev
+COPY . . 
