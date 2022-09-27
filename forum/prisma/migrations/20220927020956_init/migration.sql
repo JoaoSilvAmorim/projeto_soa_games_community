@@ -25,4 +25,4 @@ CREATE TABLE `Answers` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
-ALTER TABLE `Answers` ADD CONSTRAINT `Answers_topicId_fkey` FOREIGN KEY (`topicId`) REFERENCES `Topics`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Answers` ADD CONSTRAINT `Answers_topicId_fkey` FOREIGN KEY (`topicId`) REFERENCES `Topics`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;

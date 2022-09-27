@@ -22,6 +22,17 @@ export class TopicsService {
     return created;
   }
 
+  async findUser(id: string, xAccesstoken: string) {
+    // request to external endpoint
+    const response = await fetch(`https://api.mojang.com/user/profiles/${id}/names`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${xAccesstoken}`,
+      },
+    });
+  }
+
   async findAll() {
     const finds = await this.prisma.topics.findMany();
 
