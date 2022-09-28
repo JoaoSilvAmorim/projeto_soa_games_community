@@ -1,0 +1,28 @@
+<div class="container">
+    <!-- list of games with image-->
+    <div *ngIf="games" class="row">
+        <div class="col-md-4 mb-2" *ngFor="let game of games">
+            <div class="card">
+                <img class="card-img-top" [src]="game.thumbnail" alt="game image">
+                <div class="card-body">
+                    <h5 class="card-title">{{game.title}}</h5>
+                    <p class="card-text">{{game.short_description}}</p>
+                    <a routerLink="{{'./'+game.id}}" class="btn btn-primary">Acessar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!games" class="row">
+        <div class="col-md-4 mb-2" *ngFor="let columns of [1,2,3,4,5,6,7,8,9]">
+            <div class="card">
+                <ngx-skeleton-loader animation="progress" [theme]="{height: '200px'}"></ngx-skeleton-loader>
+                <div class="card-body">
+                    <ngx-skeleton-loader animation="progress"></ngx-skeleton-loader>
+                    <p class="card-text">
+                        <ngx-skeleton-loader animation="progress" count="4"></ngx-skeleton-loader>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

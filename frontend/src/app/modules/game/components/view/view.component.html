@@ -1,0 +1,75 @@
+<div class="container">
+    <!-- card info game-->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="d-flex justify-content-center">
+                <ng-lottie [options]="options" height="300px" (animationCreated)="animationCreated($event)"></ng-lottie>
+                <!-- <img src="../../../assets/images/undraw_page_not_found_re_e9o6.svg" alt="" style="width: 50%;"> -->
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Informações do jogo</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <span><b>Nome:</b> {{game?.title}}</span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <span><b>Data de Lançamento:</b> {{game?.release_date | date}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <span><b>Plataforma:</b> {{game?.platform}}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <span><b>Empresa:</b> {{game?.developer}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <span><b>Descrição:</b> {{game?.short_description}}</span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <span><b>Site: </b> <a href="{{game?.game_url}}" target="_blank">{{game?.game_url}}</a></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div>
+                <div class="card">
+                    <div class="card-body">
+                        <img src="{{game?.thumbnail}}" alt="image game" class="img-fluid" width="100%">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="d-flex justify-content-center">
+                <!-- <img src="../../../assets/images/undraw_page_not_found_re_e9o6.svg" alt="" style="width: 50%;"> -->
+            </div>
+        </div>
+    </div>

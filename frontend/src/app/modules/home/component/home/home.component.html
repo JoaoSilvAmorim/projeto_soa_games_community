@@ -1,0 +1,53 @@
+<div class="container">
+    <!-- homepage gammer community -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="d-flex justify-content-center">
+                <ng-lottie [options]="options" (animationCreated)="animationCreated($event)"></ng-lottie>
+            </div>
+            <br>
+        </div>
+        <div class="col-md-12">
+            <div class="card" style="background-color: rgb(238, 238, 238);">
+                <div class="">
+                    <h3 class="card-title text-center mt-5 mb-5">Gamers Community</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row mt-2 mb-5">
+                        <div class="col-md-4 mb-4">
+                            <div class="card">
+                                <div class="card-body" style="background-color: rgb(219, 219, 219);">
+                                    <h5 class="card-title">CHAT</h5>
+                                    <p class="card-text">Sistema de comunicação entre gamers, onde as pessoas podem debater sobre diversos gêneros, jogos, análises e entre outros.</p>
+                                    <a *ngIf="userLogged()" href="http://15.229.15.203:8000/" target="_blank" class="btn btn-success">Acessar</a>
+                                    <a *ngIf="!userLogged()" class="btn btn-secondary" disabled>Acessar</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="card">
+                                <div class="card-body" style="background-color: rgb(219, 219, 219);">
+                                    <h5 class="card-title">Fórum</h5>
+                                    <br>
+                                    <p class="card-text">Participe da comunidade e crie posts, comentários sobre os seus jogos preferidos.</p>
+                                    <a *ngIf="userLogged()" routerLink="../forum" class="btn btn-success">Acessar</a>
+                                    <a *ngIf="!userLogged()" class="btn btn-secondary" disabled>Acessar</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="card">
+                                <div class="card-body" style="background-color: rgb(219, 219, 219);">
+                                    <h5 class="card-title">Listagem de Jogos</h5>
+                                    <br>
+                                    <p class="card-text">Acesse o acervo de jogos, e planeje seus próximos jogos.</p>
+                                    <a *ngIf="userLogged()" routerLink="../game" class="btn btn-success">Acessar</a>
+                                    <a *ngIf="!userLogged()" class="btn btn-secondary" disabled>Acessar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>

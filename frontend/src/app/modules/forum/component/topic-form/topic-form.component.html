@@ -1,0 +1,42 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- form topic -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Novo Tópico</h3>
+                </div>
+                <div class="panel-body">
+                    <form novalidate (ngSubmit)="createTopic()" [formGroup]="topicForm" class="mt-4">
+                        <div class="form-group mb-2">
+                            <label for="theme"><b>Tópico</b></label>
+                            <input type="text" name="theme" class="form-control" id="theme" formControlName="theme"
+                                [ngClass]="{'is-invalid': displayMessage['theme']}">
+                        </div>
+                        <div class="form-group mb-2">
+                            <label for="category"><b>Categoria</b></label>
+                            <input type="text" name="category" class="form-control" id="category"
+                                formControlName="category" [ngClass]="{'is-invalid': displayMessage['category']}">
+                        </div>
+                        <div class="form-group mb-2">
+                            <label for="question"><b>Pergunta</b></label>
+                            <textarea name="question" rows="3" class="form-control" id="question"
+                                formControlName="question" [ngClass]="{'is-invalid': displayMessage['question']}"></textarea>
+                        </div>
+                        <!-- select game -->
+                        <div class="form-group mb-2">
+                            <label for="game"><b>Jogo</b></label>
+                            <select class="form-control" id="game" formControlName="gameId"
+                                [ngClass]="{'is-invalid': displayMessage['game']}">
+                                <option *ngFor="let game of games" [value]="game.id">{{game.title}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-12 text-center mt-4">
+                            <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm"><b>Salvar</b></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,42 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="myform form ">
+                <div class="logo mb-3">
+                    <div class="col-md-12 text-center">
+                        <h1>Cadastre-se</h1>
+                    </div>
+                </div>
+                <form novalidate (ngSubmit)="signUpUser()" [formGroup]="signUpForm" class="mt-4">
+                    <div class="form-group mb-2">
+                        <label for="name"><b>Name</b></label>
+                        <input type="text" name="name" class="form-control" id="name" formControlName="name">
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="email"><b>E-MAIL</b></label>
+                        <input type="email" name="email" class="form-control" id="email" formControlName="email">
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="password"><b>SENHA</b></label>
+                        <input type="password" name="password" id="password" class="form-control" formControlName="password">
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="confirmPassword"><b>CONFIRME A SENHA</b></label>
+                        <input type="password" name="confirmPassword" id="confirmPassword" class="form-control" formControlName="confirmPassword">
+                    </div>
+                    <div class="col-md-12 text-center mt-4">
+                        <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm"><b>CADASTRE-SE</b></button>
+                    </div>
+                    <div class="col-md-12 d-flex justify-content-center">
+                        <div class="login-or">
+                            <hr class="hr-or">
+                            <span class="text-center">ou</span>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <p class="text-center">Já tem uma conta? <a routerLink="../" id="signup">Entrar</a></p>
+                    </div>
+                </form>
+            </div>
+</div>

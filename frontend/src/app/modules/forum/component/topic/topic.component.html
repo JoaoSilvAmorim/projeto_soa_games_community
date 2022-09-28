@@ -1,0 +1,76 @@
+<div class="container">
+    <!-- topic with answers -->
+    <div class="row" *ngIf="topic">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{topic.theme}}</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="well well-sm">
+                                <p>{{topic.question}}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <span class="text-right">
+                                <b>Categoria:</b> {{topic.category}}
+                            </span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Respostas</th>
+                                        <th>criado em</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let answer of comments">
+                                        <td>
+                                            <span>{{answer.answer}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{answer.createdAt | date}}</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="col-md-12">
+            <!-- answer area -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Responder</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form (ngSubmit)="saveAnswer()" [formGroup]="answerForm">
+                                <div class="form-group">
+                                    <label for="description">Descrição</label>
+                                    <textarea class="form-control" id="description" name="description" formControlName="answer" required></textarea>
+                                    <div [hidden]="answerForm.valid && answerForm.dirty" class="alert alert-danger">
+                                        A descrição é obrigatória.
+                                    </div>
+                                </div>
+                                <br>
+                                <button type="submit" class="btn btn-success" [disabled]="!answerForm.valid">Enviar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+
+</div>
