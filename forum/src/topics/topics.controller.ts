@@ -10,8 +10,8 @@ export class TopicsController {
   constructor(private readonly topicsService: TopicsService) {}
 
   @Post()
-  create(@Body() createTopicDto: CreateTopicDto) {
-    return this.topicsService.create(createTopicDto);
+  create(@Body() createTopicDto: CreateTopicDto, token:string) {
+    return this.topicsService.create(createTopicDto, token);
   }
 
   @Get()

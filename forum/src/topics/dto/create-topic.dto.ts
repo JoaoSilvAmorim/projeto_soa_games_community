@@ -21,5 +21,6 @@ export class CreateTopicDto {
     question: string;
     
     @ApiProperty({example: 'noticias', description: 'Categoria do tópico'})
+    @IsString()
     category: Category;
 }

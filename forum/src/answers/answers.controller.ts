@@ -10,8 +10,8 @@ export class AnswersController {
   constructor(private readonly answersService: AnswersService) {}
 
   @Post()
-  create(@Body() createAnswerDto: CreateAnswerDto) {
-    return this.answersService.create(createAnswerDto);
+  create(@Body() createAnswerDto: CreateAnswerDto, token:string) {
+    return this.answersService.create(createAnswerDto, token);
   }
 
   @Get()

@@ -1,4 +1,6 @@
 /* eslint-disable prettier/prettier */
+const axios = require('axios');
+import { HttpException } from '@nestjs/common';
 import { Injectable } from '@nestjs/common';
 import { CreateAnswerDto } from './dto/create-answer.dto';
 import { UpdateAnswerDto } from './dto/update-answer.dto';
@@ -7,19 +9,40 @@ import { PrismaService } from '../prisma/prisma.service';
 @Injectable()
 export class AnswersService {
   constructor(private readonly prisma: PrismaService) {}
-  async create(createAnswerDto: CreateAnswerDto) {
+  async create(createAnswerDto: CreateAnswerDto, token: string) {
     const answer = {
       ...createAnswerDto,
     }
 
+    let info_user = await this.findUser(token).then((res) => {
+      if(res['data']['type'] === 'success') return res['data']['data'].id
+    }).catch((error)=> {
+       throw new HttpException('User not found', 404)
+    })
+
     const data = new Date();
 
     const br = new Date(data.setHours(data.getHours() - 3));
-    
+    info_user = `${info_user}`
     const created = await this.prisma.answers.create({
-      data: {...answer, createdAt: br, updatedAt: br},
+      data: {...answer, createdAt: br, updatedAt: br, userId: info_user},
     })
     return created;
+  }
+
+  async findUser(xAccesstoken: string) {
+    return await axios.post('https://woem7k63g7.execute-api.us-east-1.amazonaws.com/dev/my_user', 
+      {},
+      {
+        headers: {
+          'X-Access-token': xAccesstoken,
+        }
+      }
+    ).then(function (resp) {
+      return resp
+    }).catch(function (error) {
+      return error;
+    });
   }
 
   async findAll() {
@@ -49,7 +72,7 @@ export class AnswersService {
 
     const attTopic = await this.prisma.answers.update({
       where: {id: answer.id},
-      data: {...updateAnswerDto, id: answer.id, createdAt: answer.createdAt, updatedAt: br},
+      data: {...updateAnswerDto, id: answer.id, createdAt: answer.createdAt, updatedAt: br, userId: answer.userId},
     })
     return attTopic;
   }
