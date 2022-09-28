@@ -9,8 +9,7 @@ export class CreateTopicDto {
     gameId: string;
     
     @ApiProperty({example: '1', description: 'Id do usuário'})
-    @IsString()
-    userId: string;
+    userId: string | number;
     
     @ApiProperty({example: 'Bug na missão X do GTA V', description: 'Temática do tópico'})
     @IsString()
